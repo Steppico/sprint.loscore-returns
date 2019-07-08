@@ -41,6 +41,7 @@ class LoScore {
     let newArray = [];
     this.each(collection, (item) => {
       newArray.push(iteratee(item));
+      console.log(newArray);
     });
     return newArray;
   }
@@ -140,7 +141,18 @@ class LoScore {
   }
 
   invoke(collection, functionOrKey) {
-    // YOUR CODE HERE
+    let array = [];
+    if (typeof functionOrKey === "function") {
+      console.log("function", collection);
+      for (let item of collection) {
+        array.push(functionOrKey.apply(item));
+      }
+    } else {
+      for (let item of collection) {
+        array.push(item[functionOrKey]());
+      }
+    }
+    return array;
   }
 
   /**
