@@ -9,7 +9,15 @@ class LoScore {
   |~~~~~~~~~~
   * */
   uniq(array) {
-    // YOUR CODE HERE
+    let obj = {};
+    for (let i = 0; i < array.length; i++) {
+      obj["+" + array[i]] = array[i];
+    }
+    let newArr = Object.keys(obj);
+    for (let i = 0; i < newArr.length; i++) {
+      newArr[i] = Number(+newArr[i]);
+    }
+    return newArr;
   }
 
   /**
