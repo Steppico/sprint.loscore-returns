@@ -38,7 +38,11 @@ class LoScore {
   }
 
   map(collection, iteratee) {
-    // YOUR CODE HERE
+    let newArray = [];
+    this.each(collection, (item) => {
+      newArray.push(iteratee(item));
+    });
+    return newArray;
   }
 
   filter(collection, test) {
@@ -47,7 +51,15 @@ class LoScore {
     return result;
   }
 
-  reject(collection, test) {}
+  reject(collection, test) {
+    const result = [];
+    this.filter(collection, (value) => {
+      if (!test(value)) {
+        result.push(value);
+      }
+    });
+    return result;
+  }
 
   reduce(collection, iterator, accumulator) {
     // YOUR CODE HERE
