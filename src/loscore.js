@@ -129,7 +129,14 @@ class LoScore {
   }
 
   memoize(func) {
-    // YOUR CODE HERE
+    let cache = {};
+    return function(...items) {
+      if (!cache[JSON.stringify(items)]) {
+        return (cache[JSON.stringify(items)] = func(items));
+      } else {
+        return cache[JSON.stringify(items)];
+      }
+    };
   }
 
   invoke(collection, functionOrKey) {
