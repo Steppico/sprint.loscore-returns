@@ -61,20 +61,56 @@ class LoScore {
     return result;
   }
 
-  reduce(collection, iterator, accumulator) {
-    // YOUR CODE HERE
+  reduce(collection, iterator, accumulator = collection[0]) {
+    if (accumulator === collection[0]) {
+      collection = collection.slice(1);
+    }
+    this.each(collection, (item) => {
+      let previousResult = accumulator;
+      accumulator = iterator(accumulator, item);
+      if (accumulator === undefined) {
+        accumulator = previousResult;
+      }
+    });
+    return accumulator;
   }
 
-  every() {
-    // YOUR CODE HERE
+  every(collection, test) {
+    if (collection.length === 0) return true;
+    let booly = true;
+    booly = this.reduce(collection, (accumulator, value) => {
+      if (accumulator == false) {
+        return false;
+      }
+      return test === undefined ? value : !!test(value);
+    });
+    return booly;
+
+    /*let booly = true;
+    this.reduce(collection, (item)=>{
+      if (booly === false) {
+        return false;
+      }
+      if ( booly === true ) {
+        booly = test(item);
+      }
+      console.log(booly);
+      
+    });
+    return booly;*/
   }
 
   /**
   | OBJECTS
   |~~~~~~~~~~
   * */
-  extend(obj) {
-    // YOUR CODE HERE
+  extend(mainObj, ...obj) {
+    this.each(obj, (item) => {
+      for (let key in item) {
+        mainObj[key] = item[key];
+      }
+    });
+    return mainObj;
   }
 
   /**
@@ -83,7 +119,13 @@ class LoScore {
   * */
 
   once(func) {
-    // YOUR CODE HERE
+    let count = 0;
+    return function() {
+      if (count === 0) {
+        count++;
+        func();
+      }
+    };
   }
 
   memoize(func) {
