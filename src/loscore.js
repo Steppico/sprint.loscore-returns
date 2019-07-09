@@ -41,7 +41,6 @@ class LoScore {
     let newArray = [];
     this.each(collection, (item) => {
       newArray.push(iteratee(item));
-      console.log(newArray);
     });
     return newArray;
   }
@@ -86,28 +85,16 @@ class LoScore {
       return test === undefined ? value : !!test(value);
     });
     return booly;
-
-    /*let booly = true;
-    this.reduce(collection, (item)=>{
-      if (booly === false) {
-        return false;
-      }
-      if ( booly === true ) {
-        booly = test(item);
-      }
-      console.log(booly);
-      
-    });
-    return booly;*/
   }
 
   /**
   | OBJECTS
   |~~~~~~~~~~
   * */
+
   extend(mainObj, ...obj) {
     this.each(obj, (item) => {
-      for (let key in item) {
+      for (const key in item) {
         mainObj[key] = item[key];
       }
     });
@@ -130,25 +117,22 @@ class LoScore {
   }
 
   memoize(func) {
-    let cache = {};
+    const cache = {};
     return function(...items) {
       if (!cache[JSON.stringify(items)]) {
         return (cache[JSON.stringify(items)] = func(items));
-      } else {
-        return cache[JSON.stringify(items)];
       }
     };
   }
 
   invoke(collection, functionOrKey) {
-    let array = [];
+    const array = [];
     if (typeof functionOrKey === "function") {
-      console.log("function", collection);
-      for (let item of collection) {
+      for (const item of collection) {
         array.push(functionOrKey.apply(item));
       }
     } else {
-      for (let item of collection) {
+      for (const item of collection) {
         array.push(item[functionOrKey]());
       }
     }
